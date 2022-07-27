@@ -1,0 +1,13 @@
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  background-color: aquamarine;
+  margin: 10px;
+}
+
+.start {
+  background-color: blueviolet;
+}
