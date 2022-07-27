@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  min-height: 10vh;
+  text-align: center;
+  font-size: calc(10px + 2vmin);
+}
+
