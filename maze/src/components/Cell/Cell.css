@@ -11,3 +11,15 @@
 .start {
   background-color: blueviolet;
 }
+
+.right {
+  background-color: rgb(31, 252, 11);
+}
+
+.wrong {
+  background-color: rgb(252, 30, 30);
+}
+
+.answer {
+  background-color: rgb(11, 204, 252);
+}

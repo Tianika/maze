@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux/es/exports';
 import { changeUserSelection } from '../../redux/reducers/GameSlice';
+import { answerSelector, userSelectionSelector } from '../../redux/selectors/GameSelectors';
 import { store } from '../../redux/store/store';
 import Cell from '../Cell/Cell';
 import './GameField.css';
 
 const GameField = ({ startX, startY, difficulty }) => {
   const [dataForGame, setDataForGame] = useState(null);
+  const [isSelect, setIsSelect] = useState(false);
+  const { userX, userY } = useSelector(userSelectionSelector);
+  const { answerX, answerY } = useSelector(answerSelector);
+
   const getField = () => {
     const field = [];
 
@@ -13,8 +19,8 @@ const GameField = ({ startX, startY, difficulty }) => {
       const row = [];
       for (let j = 1; j < difficulty + 1; j += 1) {
         row.push({
-          x: i,
-          y: j,
+          x: j,
+          y: i,
         });
       }
       field.push(row);
@@ -28,16 +34,37 @@ const GameField = ({ startX, startY, difficulty }) => {
   }, []);
 
   const handleClick = (x, y) => {
-    store.dispatch(changeUserSelection(x, y));
+    setIsSelect(!isSelect);
+    store.dispatch(changeUserSelection({ x, y }));
   };
 
   const getCellStyle = (x, y) => {
-    return x === startX && y === startY ? 'start' : '';
+    if (isSelect) {
+      if (x === userX && y === userY && userX === answerX && userY === answerY) {
+        return 'right';
+      }
+
+      if (x === answerX && y === answerY) {
+        return 'answer';
+      }
+
+      if (x === userX && y === userY) {
+        return 'wrong';
+      }
+    }
+
+    if (!isSelect && x === startX && y === startY) {
+      return 'start';
+    }
+
+    return '';
   };
 
   return (
     <>
-      <div>Cтарт</div>
+      <div>
+        Cтарт startX:{startX} startY:{startY}
+      </div>
       {dataForGame && (
         <div className="game-field-table">
           {dataForGame.map((row) => {
