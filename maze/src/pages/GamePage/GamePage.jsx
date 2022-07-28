@@ -1,18 +1,17 @@
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { difficultySelector, movesSelector } from '../redux/selectors/GameSelectors';
-import GameField from '../components/GameField/GameField';
-import { getRandomNum, shuffleArray } from '../utils/common';
-import ArrowContainer from '../components/ArrowContainer/ArrowContainer';
-import { DIRECTIONS, DIRECTIONS_MAP } from '../utils/constants';
-import { store } from '../redux/store/store';
-import { changeAnswer } from '../redux/reducers/GameSlice';
+import { difficultySelector, movesSelector } from '../../redux/selectors/GameSelectors';
+import GameField from '../../components/GameField/GameField';
+import { getRandomNum, shuffleArray } from '../../utils/common';
+import ArrowContainer from '../../components/ArrowContainer/ArrowContainer';
+import { DIRECTIONS, DIRECTIONS_MAP } from '../../utils/constants';
+import { store } from '../../redux/store/store';
+import { changeAnswer } from '../../redux/reducers/GameSlice';
 
 const GamePage = () => {
   const difficulty = useSelector(difficultySelector);
   const moves = useSelector(movesSelector);
   const [startField, setStartField] = useState(null);
-  const [answerField, setAnswerField] = useState(null);
   const [arrows, setArrows] = useState(null);
 
   const checkDirection = (direction, answer) => {
@@ -38,7 +37,7 @@ const GamePage = () => {
       const direction = DIRECTIONS[0];
       const { isCanMove, x, y } = checkDirection(direction, answer);
 
-      if (isCanMove) {
+      if (isCanMove && direction !== res[res.length - 1]) {
         answer = {
           x,
           y,
@@ -48,7 +47,6 @@ const GamePage = () => {
     }
 
     setArrows([...res]);
-    setAnswerField({ ...answer });
     store.dispatch(changeAnswer({ ...answer }));
   };
 
@@ -69,11 +67,6 @@ const GamePage = () => {
     <>
       {startField && (
         <GameField startX={startField.x} startY={startField.y} difficulty={difficulty} />
-      )}
-      {answerField && (
-        <div>
-          Ответ X:{answerField.x} Y:{answerField.y}
-        </div>
       )}
       {arrows && <ArrowContainer arrows={arrows} />}
     </>

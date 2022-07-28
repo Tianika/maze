@@ -1,0 +1,26 @@
+.arrow-item {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  background-image: url('../../assets/png/arrow.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 40px 40px;
+}
+
+.arrow-item.left {
+  transform: rotate(180deg);
+}
+
+.arrow-item.top {
+  transform: rotate(-90deg);
+}
+
+.arrow-item.bottom {
+  transform: rotate(90deg);
+}

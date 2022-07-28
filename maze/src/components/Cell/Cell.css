@@ -5,21 +5,24 @@
   width: 100px;
   height: 100px;
   background-color: aquamarine;
-  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgb(34, 34, 34);
+  font-size: 18px;
+  color: #ffffff;
 }
 
-.start {
+.cell.start {
   background-color: blueviolet;
 }
 
-.right {
-  background-color: rgb(31, 252, 11);
+.cell.right {
+  background-color: rgb(16, 194, 0);
 }
 
-.wrong {
-  background-color: rgb(252, 30, 30);
+.cell.wrong {
+  background-color: rgb(236, 1, 1);
 }
 
-.answer {
-  background-color: rgb(11, 204, 252);
+.cell.answer {
+  background-color: rgb(0, 184, 230);
 }

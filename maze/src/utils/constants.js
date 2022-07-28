@@ -18,3 +18,10 @@ export const DIRECTIONS_MAP = {
     y: 1,
   },
 };
+
+export const ANSWERS = {
+  start: 'Старт',
+  right: 'Правильно',
+  answer: 'Правильно',
+  wrong: 'Ошибка',
+};

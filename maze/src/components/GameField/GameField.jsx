@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux/es/exports';
 import { changeUserSelection } from '../../redux/reducers/GameSlice';
-import { answerSelector, userSelectionSelector } from '../../redux/selectors/GameSelectors';
+import {
+  answerSelector,
+  levelSelector,
+  userSelectionSelector,
+} from '../../redux/selectors/GameSelectors';
 import { store } from '../../redux/store/store';
 import Cell from '../Cell/Cell';
 import './GameField.css';
@@ -11,6 +15,7 @@ const GameField = ({ startX, startY, difficulty }) => {
   const [isSelect, setIsSelect] = useState(false);
   const { userX, userY } = useSelector(userSelectionSelector);
   const { answerX, answerY } = useSelector(answerSelector);
+  const level = useSelector(levelSelector);
 
   const getField = () => {
     const field = [];
@@ -19,8 +24,8 @@ const GameField = ({ startX, startY, difficulty }) => {
       const row = [];
       for (let j = 1; j < difficulty + 1; j += 1) {
         row.push({
-          x: j,
-          y: i,
+          x: i,
+          y: j,
         });
       }
       field.push(row);
@@ -62,21 +67,23 @@ const GameField = ({ startX, startY, difficulty }) => {
 
   return (
     <>
-      <div>
-        Cтарт startX:{startX} startY:{startY}
-      </div>
+      <div>Уровень {level}</div>
       {dataForGame && (
         <div className="game-field-table">
           {dataForGame.map((row) => {
-            return row.map(({ x, y }) => {
-              return (
-                <Cell
-                  key={`cell${x}${y}`}
-                  handleClick={() => handleClick(x, y)}
-                  cellStyle={getCellStyle(x, y)}
-                />
-              );
-            });
+            return (
+              <div className="game-field-row">
+                {row.map(({ x, y }) => {
+                  return (
+                    <Cell
+                      key={`cell${x}${y}`}
+                      handleClick={() => handleClick(x, y)}
+                      cellStyle={getCellStyle(x, y)}
+                    />
+                  );
+                })}
+              </div>
+            );
           })}
         </div>
       )}

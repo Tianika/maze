@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  isGame: false,
   difficulty: 3,
+  level: 1,
   moves: 10,
   userSelection: {
     userX: 0,
@@ -17,8 +19,14 @@ const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
+    changeIsGame: (state) => {
+      state.isGame = !state.isGame;
+    },
     changeDifficulty: (state, action) => {
       state.difficulty = action.payload;
+    },
+    changeLevel: (state, action) => {
+      state.level = action.payload;
     },
     changeMoves: (state, action) => {
       state.moves = action.payload;
@@ -43,4 +51,5 @@ const gameSlice = createSlice({
 });
 
 export const gameReducer = gameSlice.reducer;
-export const { changeDifficulty, changeUserSelection, changeAnswer } = gameSlice.actions;
+export const { changeIsGame, changeDifficulty, changeLevel, changeUserSelection, changeAnswer } =
+  gameSlice.actions;

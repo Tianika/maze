@@ -1,5 +1,7 @@
+import './Arrow.css';
+
 const Arrow = ({ arrow }) => {
-  return <div>{arrow}</div>;
+  return <div className={`arrow-item ${arrow}`} />;
 };
 
 export default Arrow;
