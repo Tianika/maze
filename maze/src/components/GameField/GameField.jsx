@@ -1,78 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux/es/exports';
-import { changeUserSelection } from '../../redux/reducers/GameSlice';
-import {
-  answerSelector,
-  levelSelector,
-  userSelectionSelector,
-} from '../../redux/selectors/GameSelectors';
-import { store } from '../../redux/store/store';
 import Cell from '../Cell/Cell';
 import './GameField.css';
 
-const GameField = ({ startX, startY, difficulty }) => {
-  const [dataForGame, setDataForGame] = useState(null);
-  const [isSelect, setIsSelect] = useState(false);
-  const { userX, userY } = useSelector(userSelectionSelector);
-  const { answerX, answerY } = useSelector(answerSelector);
-  const level = useSelector(levelSelector);
-
-  const getField = () => {
-    const field = [];
-
-    for (let i = 1; i < difficulty + 1; i += 1) {
-      const row = [];
-      for (let j = 1; j < difficulty + 1; j += 1) {
-        row.push({
-          x: i,
-          y: j,
-        });
-      }
-      field.push(row);
-    }
-
-    return field;
-  };
-
-  useEffect(() => {
-    setDataForGame(getField());
-  }, []);
-
-  const handleClick = (x, y) => {
-    setIsSelect(!isSelect);
-    store.dispatch(changeUserSelection({ x, y }));
-  };
-
-  const getCellStyle = (x, y) => {
-    if (isSelect) {
-      if (x === userX && y === userY && userX === answerX && userY === answerY) {
-        return 'right';
-      }
-
-      if (x === answerX && y === answerY) {
-        return 'answer';
-      }
-
-      if (x === userX && y === userY) {
-        return 'wrong';
-      }
-    }
-
-    if (!isSelect && x === startX && y === startY) {
-      return 'start';
-    }
-
-    return '';
-  };
-
+const GameField = ({ level, dataForGame, handleClick, getCellStyle }) => {
   return (
     <>
-      <div>Уровень {level}</div>
+      <h2>Уровень {level}</h2>
       {dataForGame && (
         <div className="game-field-table">
           {dataForGame.map((row) => {
             return (
-              <div className="game-field-row">
+              <div className="game-field-row" key={`row${row[0].x + row[0].y}`}>
                 {row.map(({ x, y }) => {
                   return (
                     <Cell
